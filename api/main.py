@@ -3,7 +3,11 @@ from typing import Optional
 from fastapi import FastAPI, Depends
 from sqlmodel import Field, SQLModel, create_engine, Session, select
 from dotenv import load_dotenv
-from textblob import TextBlob   # For sentiment analysis
+import joblib
+from sklearn.pipeline import Pipeline
+from datetime import datetime
+from sqlalchemy import Column, DateTime
+
 
 # Load environment variables from .env file
 load_dotenv()
@@ -12,10 +16,15 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 #Create the engine.
 engine = create_engine(DATABASE_URL, echo=True)
 
+model: Optional[Pipeline] = None
+MODEL_PATH = "sentiment_model_v1.pkl"
+
 # Define the Feedback model
 class Feedback(SQLModel, table=True):
     id: Optional[int] = Field(default=None, primary_key=True)
-    created_at: Optional[str] = Field(default_factory=str, sa_column_kwargs={"default": "NOW()"}) # Using str for simplicity, can refine to datetime
+    created_at: Optional[datetime] = Field(
+        default=None, sa_column=Column(DateTime(timezone=True), server_default="NOW()")
+    ) # Using str for simplicity, can refine to datetime
     resource_id: str = Field(index=True) 
     rating: int = Field(ge=1, le=10) # Rating between 1 and 10 - "ge" means greater than or equal to, "le" means less than or equal to
     comment: Optional[str] = None
@@ -42,7 +51,20 @@ app = FastAPI(
 
 @app.on_event("startup")
 def on_startup():
+    global model
+    print("Application Startup...")
+
     create_db_and_tables()
+
+    try:
+        model = joblib.load(MODEL_PATH)
+        print(f"Successfully loaded model from {MODEL_PATH}")
+    except FileNotFoundError:
+        print(f"ERROR: Model file not found at {MODEL_PATH}")
+        model = None
+    except Exception as e:
+        print(f"ERROR: Could not load model. {e}")
+        model = None
 
 # Define API endpoints
 
@@ -53,18 +75,19 @@ def create_feedback(feedback: Feedback, session: Session = Depends(get_session))
     """
     # We don't run sentiment analysis yet, just save the feedback
 
-    if feedback.comment:
-        # Create a TextBlob object
-        blob = TextBlob(feedback.comment)
+    if feedback.comment and model:
+        
+        comment_list = [feedback.comment]
 
-        # Get the polarity score (-1 = very negative, 1 = very positive)
-        sentiment_score = blob.sentiment.polarity
-        if sentiment_score > 0.1:
-            feedback.sentiment = "positive"
-        elif sentiment_score < -0.1:
-            feedback.sentiment = "negative"
-        else:
-            feedback.sentiment = "neutral"
+        # Make a prediction
+        prediction = model.predict(comment_list)
+
+        # The prediction is an array, get the first element only
+        feedback.sentiment = prediction[0]
+
+    elif feedback.comment and not model:
+        # Fallback in case the model failed to load
+        feedback.sentiment = "model_not_loaded"
 
     session.add(feedback)
     session.commit()
@@ -76,5 +99,5 @@ def read_feedbacks(session: Session = Depends(get_session)):
     """
     Retrieve all feedback entries.
     """
-    feedbacks = session.exec(select(Feedback)).all()
-    return feedbacks
+    feedback_list = session.exec(select(Feedback)).all()
+    return feedback_list
