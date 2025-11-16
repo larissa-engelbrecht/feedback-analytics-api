@@ -1,4 +1,4 @@
-# FeedbackLoop: An End-to-End MLOps Feedback Platform
+# FeedBackLoop: An End-to-End MLOps Feedback Platform
 
 [![Python](https://img.shields.io/badge/Python-3.11-blue?logo=python)](https://www.python.org/) [![FastAPI](https://img.shields.io/badge/FastAPI-0.110-green?logo=fastapi)](https://fastapi.tiangolo.com/) [![Streamlit](https://img.shields.io/badge/Streamlit-1.33-red?logo=streamlit)](https://streamlit.io/) [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-blue?logo=postgresql)](https://www.postgresql.org/)
 
@@ -16,7 +16,21 @@ A complete, AI-powered system for ingesting, analyzing, and improving user feedb
 - **Frontend:** Streamlit
 - **Database:** PostgreSQL (hosted on Neon)
 - **ML/AI:** Scikit-learn, Pandas, SQLModel, Google Generative AI
-- **Deployment:**
+
+## Deployment
+
+This project is deployed as two separate services:
+
+- **Backend API (FastAPI):**
+
+  - **Service:** [**Render**](https://render.com/)
+  - **Status:** `Live`
+  - **URL:** `https://feedback-analytics-api.onrender.com`
+
+- **Frontend Dashboard (Streamlit):**
+  - **Service:** [**Streamlit Community Cloud**](https://share.streamlit.io/)
+  - **Status:** `Live`
+  - **URL:** `https://feedbackloop-api.streamlit.app/`
 
 ---
 

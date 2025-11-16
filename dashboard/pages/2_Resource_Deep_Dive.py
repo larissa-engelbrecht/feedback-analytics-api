@@ -2,7 +2,6 @@ import streamlit as st
 import requests
 import pandas as pd
 
-
 # --- Load URLs from Secrets ---
 
 # Check if we are in local mode
@@ -46,7 +45,6 @@ div[data-baseweb="select"] svg {
 """, unsafe_allow_html=True)
 
 
-
 # --- Page Configuration ---
 st.set_page_config(
     page_title="Resource Deep Dive",
@@ -55,7 +53,9 @@ st.set_page_config(
     
 )
 
-st.title("Resource Deep Dive")
+
+
+st.title(":material/search: Resource Deep Dive")
 st.markdown("Analyze the feedback for a single resource and get an AI-powered summary.")
 
 # --- Data Loading ---

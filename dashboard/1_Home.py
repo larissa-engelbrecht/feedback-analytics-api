@@ -21,11 +21,12 @@ STATS_URL = f"{API_BASE_URL}/feedback/stats/"
 # --- Page Configuration ---
 st.set_page_config(
     page_title="Feedback Dashboard",
-    page_icon=":material/bar_chart:",
+    page_icon=":material/quick_phrases:",
     layout="wide",
 )
+
 # --- Page Title ---
-st.title("FeedbackLoop Dashboard")
+st.title(":material/quick_phrases: FeedBack Dashboard")
 st.markdown("This is the central dashboard for analyzing all user feedback.")
 
 # --- Refresh Data ---
