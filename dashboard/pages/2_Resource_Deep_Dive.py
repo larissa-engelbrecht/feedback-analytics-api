@@ -2,10 +2,23 @@ import streamlit as st
 import requests
 import pandas as pd
 
-# Define API URLs
-STATS_URL = "http://localhost:8002/feedback/stats/"
-FEEDBACK_URL = "http://localhost:8002/feedback/"
-SUMMARIZE_URL = "http://localhost:8002/feedback/summarize/"
+
+# --- Load URLs from Secrets ---
+
+# Check if we are in local mode
+LOCAL_MODE = st.secrets.get("LOCAL_MODE", False) # Default to False if not found
+
+# Set the single base URL
+if LOCAL_MODE:
+    API_BASE_URL = st.secrets["LOCAL_API_BASE_URL"]
+else:
+    API_BASE_URL = st.secrets["DEPLOYED_API_BASE_URL"]
+
+# Build all your endpoints from the base URL
+FEEDBACK_URL = f"{API_BASE_URL}/feedback/"
+STATS_URL = f"{API_BASE_URL}/feedback/stats/"
+SUMMARIZE_URL = f"{API_BASE_URL}/feedback/summarize/"
+
 
 st.markdown("""
 <style>

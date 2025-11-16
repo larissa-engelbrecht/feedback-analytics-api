@@ -2,8 +2,22 @@ import streamlit as st
 import requests
 import pandas as pd
 
-# --- Define API URLs ---
-WEBHOOKS_URL = "http://localhost:8002/webhooks/"
+
+
+# --- Load URLs from Secrets ---
+
+# Check if we are in local mode
+LOCAL_MODE = st.secrets.get("LOCAL_MODE", False) # Default to False if not found
+
+# Set the single base URL
+if LOCAL_MODE:
+    API_BASE_URL = st.secrets["LOCAL_API_BASE_URL"]
+else:
+    API_BASE_URL = st.secrets["DEPLOYED_API_BASE_URL"]
+
+#  Build all your endpoints from the base URL
+WEBHOOKS_URL = f"{API_BASE_URL}/webhooks/"
+
 
 st.markdown("""
 <style>

@@ -3,7 +3,7 @@ import random
 import time
 from datetime import datetime, timedelta
 
-API_URL = "http://localhost:8002/feedback/"
+FEEDBACK_URL = "http://localhost:8002/feedback/"
 
 # --- Define our inputs ---
 
@@ -71,7 +71,7 @@ for i in range(NUM_ENTRIES):
 
     # Send the feedback to the API (POST request)
     try:
-        response = requests.post(API_URL, json=feedback_entry)
+        response = requests.post(FEEDBACK_URL, json=feedback_entry)
         response.raise_for_status()  # Raise an error for bad responses
         print(f"[{i+1}/{NUM_ENTRIES}] Sent feedback for '{resource}' with rating {rating}. Posted: {fake_date}")
     except requests.exceptions.RequestException as e:

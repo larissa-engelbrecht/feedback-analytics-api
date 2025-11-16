@@ -3,9 +3,20 @@ import streamlit as st
 import requests
 import pandas as pd
 
-# URL of the backend API
-API_URL = "http://localhost:8002/feedback/"
-STATS_URL = "http://localhost:8002/feedback/stats/"
+# --- Load URLs from Secrets ---
+
+# Check if we are in local mode
+LOCAL_MODE = st.secrets.get("LOCAL_MODE", False) # Default to False if not found
+
+# Set the single base URL
+if LOCAL_MODE:
+    API_BASE_URL = st.secrets["LOCAL_API_BASE_URL"]
+else:
+    API_BASE_URL = st.secrets["DEPLOYED_API_BASE_URL"]
+
+# Build all your endpoints from the base URL
+FEEDBACK_URL = f"{API_BASE_URL}/feedback/"
+STATS_URL = f"{API_BASE_URL}/feedback/stats/"
 
 # --- Page Configuration ---
 st.set_page_config(
@@ -28,7 +39,7 @@ if st.button("Refresh Data"):
 def load_feedback_data():
 
     try:
-        response = requests.get(API_URL)
+        response = requests.get(FEEDBACK_URL)
         response.raise_for_status()  # Raise an error for bad responses
         data = response.json()
 
@@ -39,7 +50,7 @@ def load_feedback_data():
             df['created_at'] = pd.to_datetime(df["created_at"])
         return df
     except requests.exceptions.ConnectionError:
-        st.error(f"Could not connect to the backend API at {API_URL}. Please ensure the API is running.")
+        st.error(f"Could not connect to the backend API at {FEEDBACK_URL}. Please ensure the API is running.")
         return pd.DataFrame()  # Return an empty DataFrame on error
     except Exception as e:
         st.error(f"An error occured while fetching data: {e}")

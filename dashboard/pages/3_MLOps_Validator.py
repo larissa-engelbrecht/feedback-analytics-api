@@ -16,9 +16,20 @@ def get_sentiment_color(sentiment):
     else:
         return "#ffffff" 
 
-# --- Define API URLs ---
-FEEDBACK_URL = "http://localhost:8002/feedback/"
-VALIDATE_URL = "http://localhost:8002/feedback/{feedback_id}/validate/"
+# --- Load URLs from Secrets ---
+
+# Check if we are in local mode
+LOCAL_MODE = st.secrets.get("LOCAL_MODE", False) # Default to False if not found
+
+# Set the single base URL
+if LOCAL_MODE:
+    API_BASE_URL = st.secrets["LOCAL_API_BASE_URL"]
+else:
+    API_BASE_URL = st.secrets["DEPLOYED_API_BASE_URL"]
+
+# Build all your endpoints from the base URL
+FEEDBACK_URL = f"{API_BASE_URL}/feedback/"
+VALIDATE_URL = f"{API_BASE_URL}/feedback/{{feedback_id}}/validate/"
 
 # --- Page Configuration ---
 st.set_page_config(
