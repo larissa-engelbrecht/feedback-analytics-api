@@ -5,8 +5,8 @@
 A complete, AI-powered system for ingesting, analyzing, and improving user feedback. This project demonstrates a full-stack, end-to-end MLOps workflow, from data ingestion to model re-training.
 
 **Live Demo:**
-_Frontend Dashboard (Streamlit):_ `https://feedbackloop-api.streamlit.app/`
-_Backend API (FastAPI):_ `https://feedback-analytics-api.onrender.com`
+- **_Frontend Dashboard (Streamlit):_** (https://feedbackloop-api.streamlit.app/)
+- **_Backend API (FastAPI):_** (https://feedback-analytics-api.onrender.com)
 
 ![FeedBackLoop Dashboard GIF](https://github.com/larissa-engelbrecht/feedback-analytics-api/blob/master/demo.gif)
 
@@ -27,12 +27,12 @@ This project is deployed as two separate services:
 
   - **Service:** [**Render**](https://render.com/)
   - **Status:** `Live`
-  - **URL:** `https://feedback-analytics-api.onrender.com`
+  - **URL:** (https://feedback-analytics-api.onrender.com)
 
 - **Frontend Dashboard (Streamlit):**
   - **Service:** [**Streamlit Community Cloud**](https://share.streamlit.io/)
   - **Status:** `Live`
-  - **URL:** `https://feedbackloop-api.streamlit.app/`
+  - **URL:** (https://feedbackloop-api.streamlit.app/)
 
 ---
 
