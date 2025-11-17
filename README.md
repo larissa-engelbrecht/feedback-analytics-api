@@ -6,7 +6,7 @@ A complete, AI-powered system for ingesting, analyzing, and improving user feedb
 
 **Live Demo:**
 - **_Frontend Dashboard (Streamlit):_** (https://feedbackloop-api.streamlit.app/)
-- **_Backend API (FastAPI):_** (https://feedback-analytics-api.onrender.com)
+- **_Backend API (FastAPI):_** (https://feedback-analytics-api.onrender.com/docs/)
 
 ![FeedBackLoop Dashboard GIF](https://github.com/larissa-engelbrecht/feedback-analytics-api/blob/master/demo.gif)
 
@@ -27,7 +27,7 @@ This project is deployed as two separate services:
 
   - **Service:** [**Render**](https://render.com/)
   - **Status:** `Live`
-  - **URL:** (https://feedback-analytics-api.onrender.com)
+  - **URL:** (https://feedback-analytics-api.onrender.com/docs/)
 
 - **Frontend Dashboard (Streamlit):**
   - **Service:** [**Streamlit Community Cloud**](https://share.streamlit.io/)
