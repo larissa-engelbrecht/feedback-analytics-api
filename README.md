@@ -23,6 +23,14 @@ A complete, AI-powered system for ingesting, analyzing, and improving user feedb
 
 This project is deployed as two separate services:
 
+⚠️ **Important: Read Before Testing**
+
+The Backend API is hosted on Render's free tier, which spins down after inactivity. If the Dashboard shows connection errors or fails to load data:
+
+1. Click the Backend API link below to "wake up" the server.
+2. Wait about 50-60 seconds for the page to load.
+3. Once the API docs appear, the Frontend Dashboard will function correctly.
+
 - **Backend API (FastAPI):**
 
   - **Service:** [**Render**](https://render.com/)
